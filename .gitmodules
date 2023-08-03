@@ -1,0 +1,23 @@
+[submodule "mtb_shared/cmsis/release-v5.8.0"]
+	path = mtb_shared/cmsis/release-v5.8.0
+	url = https://github.com/Infineon/cmsis
+[submodule "mtb_shared/core-lib/release-v1.4.0"]
+	path = mtb_shared/core-lib/release-v1.4.0
+	url = https://github.com/cypresssemiconductorco/core-lib
+[submodule "mtb_shared/core-make/release-v3.2.1"]
+	path = mtb_shared/core-make/release-v3.2.1
+	url = https://github.com/cypresssemiconductorco/core-make
+[submodule "mtb_shared/mtb-pdl-cat2/release-v2.5.0"]
+	path = mtb_shared/mtb-pdl-cat2/release-v2.5.0
+	url = https://github.com/FrameworkComputer/mtb-pdl-cat2
+[submodule "mtb_shared/pdstack/release-v3.10.0"]
+	path = mtb_shared/pdstack/release-v3.10.0
+	url = https://github.com/cypresssemiconductorco/pdstack
+[submodule "mtb_shared/pdutils/release-v1.10.0"]
+	path = mtb_shared/pdutils/release-v1.10.0
+	url = https://github.com/Infineon/pdutils
+[submodule "mtb_shared/recipe-make-cat2/release-v2.1.1"]
+	path = mtb_shared/recipe-make-cat2/release-v2.1.1
+	url = https://github.com/cypresssemiconductorco/recipe-make-cat2
+[submodule "git@github.com:FrameworkComputer/mtb-pdl-cat2.git"]
+	url = mtb_shared/mtb-pdl-cat2/release-v2.5.0
