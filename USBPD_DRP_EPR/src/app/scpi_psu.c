@@ -20,8 +20,12 @@ bool pd_ctrl_init(void)
     Cy_SCB_UART_PutString(UART_HW, "CURR 5.00\r\n");
     Cy_SysLib_Delay(500);
 
-    Cy_SCB_UART_PutString(UART_HW, "OUTP ON\r\n");
+    Cy_SCB_UART_PutString(UART_HW, "VOLT 5.00\r\n");
     Cy_SysLib_Delay(500);
+
+    Cy_SCB_UART_PutString(UART_HW, "OUTP OFF\r\n");
+    Cy_SysLib_Delay(500);
+
 
     
     return status;
@@ -36,4 +40,16 @@ bool set_pd_ctrl_voltage(uint8_t port, uint16_t volt)
 
     Cy_SCB_UART_PutString(UART_HW, out);
     return (status);
+}
+
+bool set_enable(uint8_t port)
+{
+    Cy_SCB_UART_PutString(UART_HW, "OUTP ON\r\n");
+    return true;
+}
+
+bool set_disable(uint8_t port)
+{
+    Cy_SCB_UART_PutString(UART_HW, "OUTP OFF\r\n");
+    return true;
 }

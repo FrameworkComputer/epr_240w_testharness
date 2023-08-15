@@ -3,7 +3,8 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-
+bool set_disable(uint8_t port);
+bool set_enable(uint8_t port);
 bool set_pd_ctrl_voltage(uint8_t port, uint16_t volt);
 bool pd_ctrl_init(void);
 

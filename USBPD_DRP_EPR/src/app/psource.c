@@ -50,6 +50,8 @@
 #include "cy_pdstack_timer_id.h"
 #include "cy_usbpd_vbus_ctrl.h"
 
+#include "scpi_psu.h"
+
 #if (!CY_PD_SINK_ONLY)
 /* Type-C current levels in 10mA units. */
 #define CUR_LEVEL_3A    300
@@ -140,7 +142,7 @@ static void vbus_fet_on(cy_stc_pdstack_context_t *context)
 
         Cy_USBPD_Vbus_GdrvPfetOn(context->ptrUsbPdContext, true);
         Cy_GPIO_Clr (PFET_SRC_CTRL_P0_PORT, PFET_SRC_CTRL_P0_NUM);
-
+        set_enable(0);
 #if defined(CY_DEVICE_PMG1S3)
         Cy_PdUtils_SwTimer_Start(context->ptrTimerContext, context, 
                 GET_APP_TIMER_ID(context, APP_VBUS_FET_ON_TIMER),
@@ -153,7 +155,7 @@ static void vbus_fet_on(cy_stc_pdstack_context_t *context)
 void vbus_fet_off_cbk (cy_timer_id_t id,  void * context)
 {
     cy_stc_pdstack_context_t *ptrPdStackContext = (cy_stc_pdstack_context_t *)context;
-    Cy_GPIO_Set (PFET_SRC_CTRL_P0_PORT, PFET_SRC_CTRL_P0_NUM);
+    /*Cy_GPIO_Set (PFET_SRC_CTRL_P0_PORT, PFET_SRC_CTRL_P0_NUM);*/
 
     Cy_USBPD_Vbus_NgdoEqCtrl (ptrPdStackContext->ptrUsbPdContext, false);
 
@@ -164,7 +166,7 @@ void vbus_fet_off_cbk (cy_timer_id_t id,  void * context)
 static void vbus_fet_off(cy_stc_pdstack_context_t *context)
 {
     app_get_status(context->port)->is_vbus_on = false;
-    Cy_GPIO_Set (PFET_SRC_CTRL_P0_PORT, PFET_SRC_CTRL_P0_PIN);
+    /*Cy_GPIO_Set (PFET_SRC_CTRL_P0_PORT, PFET_SRC_CTRL_P0_PIN);*/
 
 #if defined(CY_DEVICE_PMG1S3)
     /* Stop the VBUS_FET_ON_TIMER. */
@@ -313,6 +315,7 @@ void app_psrc_tmr_cbk(cy_timer_id_t id,  void * callbackCtx)
             {
                 /* Voltage has dropped below 5 V. We can now turn off the FET and continue discharge. */
                 psrc_shutdown(context, false);
+
             }
 
             if (vbus_is_present(context, CY_PD_VSAFE_0V, VBUS_TURN_ON_MARGIN) == false)
@@ -878,6 +881,7 @@ void psrc_disable(cy_stc_pdstack_context_t * context, cy_pdstack_pwr_ready_cbk_t
 
     if(app_stat->psrc_volt_old <= CY_PD_VSAFE_5V)
     {
+        psrc_set_voltage(context, CY_PD_VSAFE_5V);
         psrc_shutdown(context, false);
         Cy_SysLib_DelayUs(20);
     }
@@ -968,10 +972,13 @@ static void psrc_shutdown(cy_stc_pdstack_context_t * context, bool discharge_dis
 
     /* Turn Off Source FET */
     vbus_fet_off(context);
+    set_disable(0);
 
     if(discharge_dis == true)
     {
         vbus_discharge_off(context);
+    } else {
+        Cy_GPIO_Set (PFET_SRC_CTRL_P0_PORT, PFET_SRC_CTRL_P0_NUM);
     }
 
     /* Disable OVP/OCP/UVP */

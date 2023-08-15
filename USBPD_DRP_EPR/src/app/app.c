@@ -504,9 +504,10 @@ void app_event_handler(cy_stc_pdstack_context_t *ptrPdStackContext,
     {
         return;
     }
+#if 0
     char ret[] = {'E', '0' + evt/10, '0' + (evt%10), '\r', '\n', 0};
     Cy_SCB_UART_PutString(UART_HW, ret);
-
+#endif
     switch(evt)
     {
         case APP_EVT_TYPEC_STARTED:
@@ -1031,14 +1032,11 @@ bool vbus_is_present(cy_stc_pdstack_context_t *ptrPdStackContext, uint16_t volt,
                      APP_VBUS_POLL_ADC_ID,
                      APP_VBUS_POLL_ADC_INPUT, level);
 #endif /* CY_PD_VMON_TYPEC_VBUS */
-/*    if (retVal)
-    	Cy_SCB_UART_PutString(UART_HW, "vbus_present\r\n");
-    else
-    	Cy_SCB_UART_PutString(UART_HW, "vbus_npresent\r\n");
-*/
 
     char ret[] = {'V', '0' + v/10, '0' + (v%10), ' ', '0' + retVal, '\r', '\n', 0};
     Cy_SCB_UART_PutString(UART_HW, ret);
+    //Cy_SysLib_DelayUs(5000);
+
     return retVal;
 }
 

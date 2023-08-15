@@ -121,7 +121,7 @@
 #define APP_PSOURCE_EN_TIMER_PERIOD             (250u)
 
 /* Period (in ms) of VBus validity checks after enabling the power source. */
-#define APP_PSOURCE_EN_MONITOR_TIMER_PERIOD     (10u)
+#define APP_PSOURCE_EN_MONITOR_TIMER_PERIOD     (20u)
 
 /* Time (in ms) between VBus valid and triggering of PS_RDY. */
 #define APP_PSOURCE_EN_HYS_TIMER_PERIOD         (10u)
@@ -130,7 +130,7 @@
 #define APP_PSOURCE_DIS_TIMER_PERIOD            (600u)
 
 /* Period (in ms) of VBus drop to VSAFE0 checks after power source is turned OFF. */
-#define APP_PSOURCE_DIS_MONITOR_TIMER_PERIOD    (100u)
+#define APP_PSOURCE_DIS_MONITOR_TIMER_PERIOD    (500u)
 
 /* VBus Monitoring is done using internal resistor divider. */
 #define VBUS_MON_INTERNAL                       (1u)
