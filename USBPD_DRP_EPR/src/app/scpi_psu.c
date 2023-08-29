@@ -32,24 +32,33 @@ bool pd_ctrl_init(void)
 }
 
 /* Setting power voltage on MPS controller */
+uint16_t curr_volt;
 bool set_pd_ctrl_voltage(uint8_t port, uint16_t volt)
 {
     uint8_t status = 1;
+    if (curr_volt == volt) {
+        return status;
+    }
+    curr_volt = volt;
     volt = volt / 1000;
     char  out[32] = {'V', 'O', 'L', 'T', ' ', '0' + (volt / 10), '0' + (volt % 10), '.', '0', '0', '\r', '\n', 0, 0};
 
     Cy_SCB_UART_PutString(UART_HW, out);
     return (status);
 }
-
+bool enabled = false;
 bool set_enable(uint8_t port)
 {
+    enabled = true;
     Cy_SCB_UART_PutString(UART_HW, "OUTP ON\r\n");
     return true;
 }
 
 bool set_disable(uint8_t port)
 {
-    Cy_SCB_UART_PutString(UART_HW, "OUTP OFF\r\n");
+    if (enabled) {
+        enabled = false;
+        Cy_SCB_UART_PutString(UART_HW, "OUTP OFF\r\n");
+    }
     return true;
 }

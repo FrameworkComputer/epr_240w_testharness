@@ -1034,7 +1034,7 @@ bool vbus_is_present(cy_stc_pdstack_context_t *ptrPdStackContext, uint16_t volt,
 #endif /* CY_PD_VMON_TYPEC_VBUS */
 
     char ret[] = {'V', '0' + v/10, '0' + (v%10), ' ', '0' + retVal, '\r', '\n', 0};
-    Cy_SCB_UART_PutString(UART_HW, ret);
+    //Cy_SCB_UART_PutString(UART_HW, ret);
     //Cy_SysLib_DelayUs(5000);
 
     return retVal;
